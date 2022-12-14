@@ -13,6 +13,7 @@ class NavigationRoute {
   Route<dynamic> generateRoute(RouteSettings args) {
     switch (args.name) {
       case NavigationConstants.detailView:
+        // return SlideType.top.route(const DetailView(), args);
         return normalNavigate(widget: const DetailView());
       default:
         return normalNavigate(
@@ -29,29 +30,5 @@ MaterialPageRoute<dynamic> normalNavigate({
   return MaterialPageRoute(
     builder: (context) => widget,
     settings: RouteSettings(name: pageName),
-  );
-}
-
-PageRouteBuilder<dynamic> createRoute({
-  required Widget widget,
-}) {
-  return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) => widget,
-    transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      const begin = Offset(0, 1);
-      const end = Offset.zero;
-      const curve = Curves.ease;
-
-      final tween = Tween(begin: begin, end: end).chain(
-        CurveTween(
-          curve: curve,
-        ),
-      );
-
-      return SlideTransition(
-        position: animation.drive(tween),
-        child: child,
-      );
-    },
   );
 }
